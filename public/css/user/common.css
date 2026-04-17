@@ -1,0 +1,10 @@
+body {
+    background-color: #f0f0f0; /* ユーザー */
+}
+
+header {
+    background-color: #ff6347; /* ユーザー */
+    color: white;
+    padding: 20px;
+}
+
