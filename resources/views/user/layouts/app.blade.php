@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>ユーザー画面 - @yield('title')</title>
-    <link rel="stylesheet" href="{{ asset('css/admin/common.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/user/common.css') }}">
+    @stack('css')
 </head>
 <body>
     <header>
@@ -23,7 +25,6 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 チーム開発研修</p>
+        
     </footer>
 </body>
-</html>

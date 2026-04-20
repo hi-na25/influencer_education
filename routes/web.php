@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\User\CurriculumController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +17,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+
+
+// 管理者バナー
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/banner_edit', [BannerController::class, 'showBannerEdit'])->name('show.banner.edit');
+});
+
+
+
+//　ユーザー時間割
+Route::prefix('user')->namespace('User')->name('user.')->group(function () {
+    Route::get('/curriculum_list', [CurriculumController::class, 'showCurriculumList'])->name('show.curriculum');
 });
