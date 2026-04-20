@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\User\CurriculumController;
+use App\Http\Controllers\user\TopController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +32,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 //　ユーザー時間割
 Route::prefix('user')->namespace('User')->name('user.')->group(function () {
     Route::get('/curriculum_list', [CurriculumController::class, 'showCurriculumList'])->name('show.curriculum');
+});
+
+
+
+Route::prefix('user')->name('user.')->group(function () {
+    Route::get('/top', [TopController::class, 'showTop'])->name('show.top');
 });

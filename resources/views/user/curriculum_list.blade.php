@@ -12,11 +12,17 @@
     {{-- 上部のナビ部分 --}}
     <div class="row mb-4">
         <div class="col-12 d-flex align-items-center">
-            <a href="#">←戻る</a>
-            <div class="calendar-nav ms-3">
-                <a href="#">◀</a>
-                <span class="h4 mx-3">2023年7月スケジュール</span>
-                <a href="#">▶</a>
+            <a href="{{ route('user.show.top') }}" class="text-decoration-none">←戻る</a>
+            <div class="calendar-nav ms-3 text-start">
+                {{-- ◀ に前月のリンクを貼る --}}
+                <a href="{{ route('user.show.curriculum', ['date' => $prevMonth]) }}">◀</a>
+                
+                {{-- ここを変数にする --}}
+                <span class="h4 mx-3">{{ $displayDate }} スケジュール</span>
+                
+                {{-- ▶ に次月のリンクを貼る --}}
+                <a href="{{ route('user.show.curriculum', ['date' => $nextMonth]) }}">▶</a>
+            </div>
             </div>
         </div>
     </div>
