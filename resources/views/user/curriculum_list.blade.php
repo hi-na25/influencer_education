@@ -23,7 +23,23 @@
                 {{-- ▶ に次月のリンクを貼る --}}
                 <a href="{{ route('user.show.curriculum', ['date' => $nextMonth]) }}">▶</a>
             </div>
-            </div>
+            
+            @if($selectedGrade)
+                <div class="selected-grade-badge ms-3">
+                    {{-- gradeの数字によって表示する文字を出し分け --}}
+                    @php
+                        $gradeNames = [
+                            1 => '小学校1年生', 2 => '小学校2年生', 3 => '小学校3年生',
+                            4 => '小学校4年生', 5 => '小学校5年生', 6 => '小学校6年生',
+                            7 => '中学校1年生', 8 => '中学校2年生', 9 => '中学校3年生',
+                            10 => '高校1年生', 11 => '高校2年生', 12 => '高校3年生'
+                        ];
+                    @endphp
+                    <span class="sidebar-btn {{ $selectedGrade <= 6 ? 'btn-elementary' : ($selectedGrade <= 9 ? 'btn-junior-high' : 'btn-high-school') }} py-1 px-3" style="width: auto; cursor: default;">
+                        {{ $gradeNames[$selectedGrade] ?? '' }}
+                    </span>
+                </div>
+            @endif
         </div>
     </div>
 
@@ -33,20 +49,56 @@
         {{-- 左メニュー --}}
         <div class="col-md-2">
             <div class="d-flex flex-column align-items-center gap-2"> {{-- ボタンを縦に並べる --}}
-                <button class="sidebar-btn btn-elementary">小学校1年生</button>
-                <button class="sidebar-btn btn-elementary">小学校2年生</button>
-                <button class="sidebar-btn btn-elementary">小学校3年生</button>
-                <button class="sidebar-btn btn-elementary">小学校4年生</button>
-                <button class="sidebar-btn btn-elementary">小学校5年生</button>
-                <button class="sidebar-btn btn-elementary">小学校6年生</button>
+                <a href="{{ route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 1]) }}" 
+                    class="sidebar-btn btn-elementary text-decoration-none text-center">
+                    小学校1年生
+                </a>
+                <a href="{{ route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 2]) }}" 
+                    class="sidebar-btn btn-elementary text-decoration-none text-center">
+                    小学校2年生
+                </a>
+                <a href="{{ route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 3]) }}" 
+                    class="sidebar-btn btn-elementary text-decoration-none text-center">
+                    小学校3年生
+                </a>
+                <a href="{{ route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 4]) }}" 
+                    class="sidebar-btn btn-elementary text-decoration-none text-center">
+                    小学校4年生
+                </a>
+                <a href="{{ route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 5]) }}" 
+                    class="sidebar-btn btn-elementary text-decoration-none text-center">
+                    小学校5年生
+                </a>
+                <a href="{{ route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 6]) }}" 
+                    class="sidebar-btn btn-elementary text-decoration-none text-center">
+                    小学校6年生
+                </a>
                 
-                <button class="sidebar-btn btn-junior-high">中学校1年生</button>
-                <button class="sidebar-btn btn-junior-high">中学校2年生</button>
-                <button class="sidebar-btn btn-junior-high">中学校3年生</button>
+                <a href="{{ route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 7]) }}" 
+                    class="sidebar-btn btn-junior-high text-decoration-none text-center">
+                    中学校1年生
+                </a>
+                <a href="{{ route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 8]) }}" 
+                    class="sidebar-btn btn-junior-high text-decoration-none text-center">
+                    中学校2年生
+                </a>
+                <a href="{{ route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 9]) }}" 
+                    class="sidebar-btn btn-junior-high text-decoration-none text-center">
+                    中学校3年生
+                </a>
                 
-                <button class="sidebar-btn btn-high-school">高校1年生</button>
-                <button class="sidebar-btn btn-high-school">高校2年生</button>
-                <button class="sidebar-btn btn-high-school">高校3年生</button>
+                <a href="{{ route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 10]) }}" 
+                    class="sidebar-btn btn-high-school text-decoration-none text-center">
+                    高校1年生
+                </a>
+                <a href="{{ route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 11]) }}" 
+                    class="sidebar-btn btn-high-school text-decoration-none text-center">
+                    高校2年生
+                </a>
+                <a href="{{ route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 12]) }}" 
+                    class="sidebar-btn btn-high-school text-decoration-none text-center">
+                    高校3年生
+                </a>
             </div>
         </div>
 
