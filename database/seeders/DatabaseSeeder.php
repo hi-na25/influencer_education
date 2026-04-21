@@ -12,8 +12,16 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call([
+            GradeSeeder::class,    // 1. まず学年を作る（最優先！）
+            AdminSeeder::class,
+            UserSeeder::class,     // 2. 学年に紐づくユーザーを作る
+            CurriculumSeeder::class, // 3. 学年に紐づく授業を作る
+            ArticleSeeder::class,
+            BannerSeeder::class,
+            DeliveryTime::class,
+        ]);  // \App\Models\User::factory(10)->create();
     }
 }

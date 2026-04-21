@@ -37,6 +37,25 @@
 
 
 
+/* 通常のメニューアイテム */
+.side-menu__item {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+/* 非活性なメニューアイテム（追加） */
+.sidebar-btn--disabled {
+    background-color: #d1d1d1; /* グレー背景 */
+    color: #888;              /* 薄い文字色 */
+    cursor: not-allowed;      /* マウスカーソルを禁止マークに */
+    pointer-events: none;     /* クリックを完全に無効化 */
+}
+
+
+
+
 /* 授業カード全体の枠 */
 .curriculum-card {
     border: 1px solid #ddd;
@@ -78,4 +97,21 @@
 
 .schedule-item {
     margin-bottom: 4px;
+}
+
+/* カリキュラムカードの画像エリアの共通設定 */
+.curriculum-card__img-wrapper {
+    width: 100%;
+    height: 180px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* 画像がない時のダミー表示用のスタイル (BEM記法) */
+.curriculum-card__img-wrapper--empty {
+    background-color: #eee;
+    color: #aaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
