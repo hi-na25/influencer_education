@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
+    console.log("JS読み込み完了！"); // これが出るか確認
+    
     // ページ全体のクリックを監視
     document.addEventListener('click', function (e) {
         // ajax-nav クラス、またはそれを含むリンクを探す
@@ -48,16 +50,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 }`;
             }
 
-            // 4. 全ボタン（◀▶と左メニュー）の data-date を現在の月に更新
-            // これで「5月を見てる時に学年を変えても5月のまま」になります
+            // 4. 次のクリックのために各ボタンのデータを更新する
+            // ここで「左メニューのボタン」と「◀▶ボタン」の両方を更新します
             document.querySelectorAll('.ajax-nav').forEach(nav => {
-                nav.dataset.date = data.currentMonth;
-                // ◀▶ボタンだけは、次の「月移動」のために専用の月をセット
-                if (nav.textContent.includes('◀')) nav.dataset.date = data.prevMonth;
-                if (nav.textContent.includes('▶')) nav.dataset.date = data.nextMonth;
-                
-                // 現在の学年もセットし直す（月移動しても学年がズレないように）
+                // 全ボタンの基準学年を「今選んだ学年」に合わせる
                 nav.dataset.grade = data.selectedGrade;
+                
+                // ◀▶ボタンは「前月」「次月」をセット
+                if (nav.textContent.includes('◀')) {
+                    nav.dataset.date = data.prevMonth;
+                } else if (nav.textContent.includes('▶')) {
+                    nav.dataset.date = data.nextMonth;
+                } else {
+                    // 学年ボタン（左メニュー）は「今表示している月」を維持
+                    nav.dataset.date = data.currentMonth;
+                }
             });
         })
         .catch(error => {

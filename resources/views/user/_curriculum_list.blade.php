@@ -1,4 +1,4 @@
-            <div class="row"> {{-- カード同士を横並びにするための row --}}
+<div class="row"> {{-- カード同士を横並びにするための row --}}
 
                 @foreach($curriculums as $item)
                     <div class="col-md-4 mb-4">
@@ -7,10 +7,10 @@
                                 {{-- 画像がある場合 --}}
                                 @if($item->thumbnail)
                                     <img src="{{ asset($item->thumbnail) }}" 
-                                        class="card-img-top curriculum-card__img" 
+                                        class="card-img-top curriculum-card__img-wrapper" 
                                         alt="{{ $item->title }}">
-                                @else
-                                {{-- 画像がない場合（規約遵守：クラス名で指定） --}}
+                               @else
+                                    {{-- 画像がない場合（規約遵守：クラス名で指定） --}}
                                     <div class="curriculum-card__img-wrapper curriculum-card__img-wrapper--empty">
                                         No Image
                                     </div>
@@ -25,10 +25,10 @@
                                     <h5 class="card-title font-weight-bold curriculum-card__title">
                                         {{ $item->title }}
                                     </h5>
-
+                                    
                                     {{-- 配信情報 --}}
                                     <div class="delivery-info text-muted curriculum-card__delivery-info">
-                                            @if($item->alway_delivery_flg == 1)
+                                        @if($item->alway_delivery_flg == 1)
                                             {{-- 常時公開フラグがオンの場合 --}}
                                             <div class="text-primary font-weight-bold">常時公開</div>
                                         @else
