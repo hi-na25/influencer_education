@@ -29,7 +29,7 @@ class CurriculumController extends Controller
             : Carbon::now()->startOfMonth();
 
         // 学年の受け取り
-        $selectedGrade = $request->input('grade', Auth::user() ? Auth::user()->grade_id : 4);
+        $selectedGrade = $request->input('grade', Auth::user()->grade_id);
 
 
         // --- 2. DBからデータを絞り込む ---
@@ -57,7 +57,6 @@ class CurriculumController extends Controller
         // 画面に渡すデータ
         return view('user.curriculum_list', [
             'displayDate'   => $targetDate->format('Y年n月'),
-            // ここで計算して渡すのが一番安全でスッキリします！
             'prevMonth'     => $targetDate->copy()->subMonth()->format('Y-m'),
             'nextMonth'     => $targetDate->copy()->addMonth()->format('Y-m'),
             'targetDate'    => $targetDate,
