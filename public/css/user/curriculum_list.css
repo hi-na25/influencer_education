@@ -1,3 +1,62 @@
+/* 戻る */
+.back-link {
+    color: #333;      /* 濃いグレー（ほぼ黒） */
+    font-size: 1.25rem;          /* サイズ（h5相当） */
+    font-weight: bold;           /* 太字 */
+    text-decoration: none;       /* 下線を消す */
+}
+
+.back-link:hover {
+    color: #000 !important;      /* ホバー時は完全な黒 */
+    text-decoration: underline;  /* ホバー時だけ下線を出す */
+}
+
+
+
+/* カレンダー上部の学年バッジ専用のスタイル */
+.selected-grade-label {
+    display: inline-block; /* 幅の指定を有効にする */
+    min-width: 160px;      /* 左メニューのボタンと同じくらいの幅を確保 */
+    white-space: nowrap;  /*
+    cursor: default;       /* クリック不可であることを示す */
+    text-align: center;    /* 文字を真ん中に寄せる */
+    padding-top: 8px !important;
+    padding-bottom: 6px !important;
+}
+
+
+
+/* カレンダーの月移動ボタン */
+.calendar-nav__link {
+    color: #333;            /* 落ち着いた黒（または #000） */
+    text-decoration: none;    /* 下線を消す */
+    font-size: 1.5rem;        /* 少し大きく（サイズはお好みで調整） */
+    vertical-align: middle;   /* 文字の高さ中央に合わせる */
+    transition: opacity 0.2s; /* ホバー時にふわっとさせる */
+}
+
+.calendar-nav__link:hover {
+    opacity: 0.7;             /* ホバーした時に少し薄くして「押せる感」を出す */
+    color: #000;            /* ホバー時も黒を維持 */
+}
+
+
+
+/* カレンダータイトルの微調整 */
+.calendar-nav__title {
+    position: relative;
+    top: 5px; /* 上の空白 */
+    margin-bottom: 0; /* Bootstrapの干渉を防ぐため念のため */
+    display: inline-block; /* 位置調整を確実に効かせるため */
+}
+
+
+
+
+
+
+
+
 /* サイドバーのボタン共通スタイル */
 .sidebar-btn {
     display: block;
@@ -55,56 +114,20 @@
 
 
 
-
 /* 授業カード全体の枠 */
 .curriculum-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    background: #fff;
-    margin-bottom: 20px;
-    height: 100%; /* 高さを揃える */
-}
-
-/* カード内の画像 */
-.card-img-wrapper img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover; /* 画像を枠に合わせて切り抜く */
-    padding: 10px; /* 周りのスペースの広さ */
-}
-
-/* カード内のテキスト部分 */
-.card-body-custom {
-    padding: 15px;
-}
-
-.curriculum-title {
-    font-weight: bold;
-    font-size: 1.1rem;
-    margin-bottom: 10px;
-    color: #333;
-}
-
-/* 日時リストのスタイル */
-.schedule-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    font-size: 0.9rem;
-    color: #666;
-}
-
-.schedule-item {
-    margin-bottom: 4px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 /* カリキュラムカードの画像エリアの共通設定 */
 .curriculum-card__img-wrapper {
     width: 100%;
-    height: 180px;
+    height: 180px;      /* ここで高さを固定！ */
     border-radius: 8px;
-    object-fit: cover;
+    object-fit: cover;  /* これで「縦長画像」も枠に合わせて綺麗に切り抜かれます */
+    display: block;     /* 幽霊な隙間を消すため追加 */
 }
 
 /* 画像がない時のダミー表示用のスタイル (BEM記法) */

@@ -12,24 +12,27 @@
     {{-- 上部のナビ部分 --}}
     <div class="row mb-4">
         <div class="col-12 d-flex align-items-center">
-            <a href="{{ route('user.show.top') }}" class="text-decoration-none">←戻る</a>
+            <a href="{{ route('user.show.top') }}" class="back-link">←戻る</a>
+
             <div class="calendar-nav ms-3 text-start">
                 {{-- 前月リンク --}}
-                <a href="{{ route('user.show.curriculum', ['date' => $prevMonth, 'grade' => $selectedGrade]) }}">
-                    ◀ 前月
+                <a href="{{ route('user.show.curriculum', ['date' => $prevMonth, 'grade' => $selectedGrade]) }}"
+                    class="calendar-nav__link">
+                    ◀
                 </a>
                 
                 {{-- ここを変数にする --}}
-                <span class="h4 mx-3">{{ $displayDate }} スケジュール</span>
+                <span class="h4 mx-2 calendar-nav__title">{{ $displayDate }} スケジュール</span>
                 
                 {{-- 次月リンク --}}
-                <a href="{{ route('user.show.curriculum', ['date' => $nextMonth, 'grade' => $selectedGrade]) }}">
-                    次月 ▶
+                <a href="{{ route('user.show.curriculum', ['date' => $nextMonth, 'grade' => $selectedGrade]) }}"
+                    class="calendar-nav__link">
+                    ▶
                 </a>
             </div>
             
             @if($selectedGrade)
-                <div class="selected-grade-badge ms-5 mt-3">
+                <div class="selected-grade-badge ms-5 mt-2">
                     {{-- gradeの数字によって表示する文字を出し分け --}}
                     @php
                         $gradeNames = [
@@ -41,8 +44,7 @@
                     @endphp
                     <span class="sidebar-btn {{ $selectedGrade <= 6 ? 'btn-elementary' :
                             ($selectedGrade <= 9 ? 'btn-junior-high' : 'btn-high-school') }}
-                        py-1 px-3"
-                        style="width: auto; cursor: default;">
+                        py-1 px-3 selected-grade-label">
                         {{ $gradeNames[$selectedGrade] ?? '' }}
                     </span>
                 </div>
@@ -197,13 +199,12 @@
 
                 @foreach($curriculums as $item)
                     <div class="col-md-4 mb-4">
-                        <div class="card h-100 border-0 shadow-sm bg-white" style="border-radius: 10px;">
-                            
+                        <div class="card h-100 border-0 shadow-sm bg-white curriculum-card">                            
                             <div class="p-3 pb-0">
                                 {{-- 画像がある場合 --}}
                                 @if($item->thumbnail)
-                                    <img src="{{ asset($item->thumbnail) }}" class="card-img-top" 
-                                        style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px;" 
+                                    <img src="{{ asset($item->thumbnail) }}" 
+                                        class="card-img-top curriculum-card__img-wrapper" 
                                         alt="{{ $item->title }}">
                                @else
                                     {{-- 画像がない場合（規約遵守：クラス名で指定） --}}
@@ -218,12 +219,12 @@
                                 class="text-decoration-none text-dark d-block">
                                     
                                     {{-- タイトル --}}
-                                    <h5 class="card-title font-weight-bold" style="font-size: 1rem; margin-bottom: 0.8rem;">
+                                    <h5 class="card-title font-weight-bold curriculum-card__title">
                                         {{ $item->title }}
                                     </h5>
                                     
-                                    {{-- 配信時間 --}}
-                                    <div class="delivery-info text-muted" style="font-size: 0.85rem; line-height: 1.5;">
+                                    {{-- 配信情報 --}}
+                                    <div class="delivery-info text-muted curriculum-card__delivery-info">
                                         @if($item->alway_delivery_flg == 1)
                                             {{-- 常時公開フラグがオンの場合 --}}
                                             <div class="text-primary font-weight-bold">常時公開</div>

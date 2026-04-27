@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Models\Curriculum;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User; // Userモデルも使う場合
+use Illuminate\Support\Facades\DB;
 
 class CurriculumController extends Controller
 {
@@ -23,8 +24,8 @@ class CurriculumController extends Controller
 
 
         // --- 1. URLから月と学年を受け取る ---
-        $targetDate = $request->input('date') 
-            ? Carbon::parse($request->input('date'))->startOfMonth() 
+        $targetDate = $request->input('date')
+            ? Carbon::parse($request->input('date'))->startOfMonth()
             : Carbon::now()->startOfMonth();
 
         // 学年の受け取り
@@ -33,20 +34,20 @@ class CurriculumController extends Controller
 
         // --- 2. DBからデータを絞り込む ---
         $curriculums = Curriculum::where('grade_id', $selectedGrade)
-            ->where(function($query) use ($targetDate) {
+            ->where(function ($query) use ($targetDate) {
                 // 1. 常時公開フラグが 1 のもの
                 $query->where('alway_delivery_flg', 1)
                     // 2. または、配信期間が指定の年月と一致するもの
-                    ->orWhereHas('deliveryTimes', function($q) use ($targetDate) {
+                    ->orWhereHas('deliveryTimes', function ($q) use ($targetDate) {
                         $q->whereYear('delivery_from', $targetDate->year)
-                        ->whereMonth('delivery_from', $targetDate->month);
+                            ->whereMonth('delivery_from', $targetDate->month);
                     });
             })
 
-            ->leftJoin('delivery_times', function($join) {
+            ->leftJoin('delivery_times', function ($join) {
                 $join->on('curriculums.id', '=', 'delivery_times.curriculums_id');
             })
-            ->select('curriculums.*', \DB::raw('MIN(delivery_times.delivery_from) as first_delivery')) 
+            ->select('curriculums.*', DB::raw('MIN(delivery_times.delivery_from) as first_delivery'))
             ->groupBy('curriculums.id') // distinctの代わりにgroupByでまとめる
             ->orderByRaw('CASE WHEN alway_delivery_flg = 1 THEN 0 ELSE 1 END')
             ->orderBy('first_delivery', 'asc')
