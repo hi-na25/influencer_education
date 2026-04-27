@@ -17,7 +17,9 @@
             <div class="calendar-nav ms-3 text-start">
                 {{-- 前月リンク --}}
                 <a href="{{ route('user.show.curriculum', ['date' => $prevMonth, 'grade' => $selectedGrade]) }}"
-                    class="calendar-nav__link">
+                    class="calendar-nav__link ajax-nav"
+                    data-date="{{ $prevMonth }}" 
+                    data-grade="{{ $selectedGrade }}">
                     ◀
                 </a>
                 
@@ -26,7 +28,9 @@
                 
                 {{-- 次月リンク --}}
                 <a href="{{ route('user.show.curriculum', ['date' => $nextMonth, 'grade' => $selectedGrade]) }}"
-                    class="calendar-nav__link">
+                    class="calendar-nav__link ajax-nav"
+                    data-date="{{ $nextMonth }}" 
+                    data-grade="{{ $selectedGrade }}">
                     ▶
                 </a>
             </div>
@@ -59,135 +63,159 @@
         <div class="col-md-2">
             <div class="d-flex flex-column align-items-center gap-2"> {{-- ボタンを縦に並べる --}}
                 
-                @php $is_disabled = 1 > Auth::user()->grade_id; @endphp
+                @php $is_disabled = 1 > Auth::user()->grade_id; $btnClass = 'btn-elementary'; @endphp
                 <a
                     href="{{ $is_disabled
                         ? 'javascript:void(0)'
                         : route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 1])
                     }}" 
-                    class="sidebar-btn btn-elementary text-decoration-none text-center
-                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}">
+                    class="sidebar-btn {{ $btnClass }} text-decoration-none text-center ajax-nav
+                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}"
+                        data-date="{{ $targetDate->format('Y-m') }}" 
+                        data-grade="1">
                         小学校1年生
                 </a>
 
-                @php $is_disabled = 2 > Auth::user()->grade_id; @endphp
+                @php $is_disabled = 2 > Auth::user()->grade_id; $btnClass = 'btn-elementary'; @endphp
                 <a
                     href="{{ $is_disabled
                         ? 'javascript:void(0)'
                         : route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 2])
                     }}" 
-                    class="sidebar-btn btn-elementary text-decoration-none text-center
-                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}">
+                    class="sidebar-btn {{ $btnClass }} text-decoration-none text-center ajax-nav
+                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}"
+                        data-date="{{ $targetDate->format('Y-m') }}" 
+                        data-grade="2">
                         小学校2年生
                 </a>
 
-                @php $is_disabled = 3 > Auth::user()->grade_id; @endphp
+                @php $is_disabled = 3 > Auth::user()->grade_id; $btnClass = 'btn-elementary'; @endphp
                 <a
                     href="{{ $is_disabled
                         ? 'javascript:void(0)'
                         : route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 3])
                     }}" 
-                    class="sidebar-btn btn-elementary text-decoration-none text-center
-                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}">
+                    class="sidebar-btn {{ $btnClass }} text-decoration-none text-center ajax-nav
+                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}"
+                        data-date="{{ $targetDate->format('Y-m') }}" 
+                        data-grade="3">
                         小学校3年生
                 </a>
 
-                @php $is_disabled = 4 > Auth::user()->grade_id; @endphp
+                @php $is_disabled = 4 > Auth::user()->grade_id; $btnClass = 'btn-elementary'; @endphp
                 <a
                     href="{{ $is_disabled
                         ? 'javascript:void(0)'
                         : route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 4])
                     }}" 
-                    class="sidebar-btn btn-elementary text-decoration-none text-center
-                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}">
+                    class="sidebar-btn {{ $btnClass }} text-decoration-none text-center ajax-nav
+                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}"
+                        data-date="{{ $targetDate->format('Y-m') }}" 
+                        data-grade="4">
                         小学校4年生
                 </a>
 
-                @php $is_disabled = 5 > Auth::user()->grade_id; @endphp
+                @php $is_disabled = 5 > Auth::user()->grade_id; $btnClass = 'btn-elementary'; @endphp
                 <a
                     href="{{ $is_disabled
                         ? 'javascript:void(0)'
                         : route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 5])
                     }}" 
-                    class="sidebar-btn btn-elementary text-decoration-none text-center
-                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}">
+                    class="sidebar-btn {{ $btnClass }} text-decoration-none text-center ajax-nav
+                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}"
+                        data-date="{{ $targetDate->format('Y-m') }}" 
+                        data-grade="5">
                         小学校5年生
                 </a>
 
-                @php $is_disabled = 6 > Auth::user()->grade_id; @endphp
+                @php $is_disabled = 6 > Auth::user()->grade_id; $btnClass = 'btn-elementary'; @endphp
                 <a
                     href="{{ $is_disabled
                         ? 'javascript:void(0)'
                         : route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 6])
                     }}" 
-                    class="sidebar-btn btn-elementary text-decoration-none text-center
-                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}">
+                    class="sidebar-btn {{ $btnClass }} text-decoration-none text-center ajax-nav
+                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}"
+                        data-date="{{ $targetDate->format('Y-m') }}" 
+                        data-grade="6">
                         小学校6年生
                 </a>
                 
-                @php $is_disabled = 7 > Auth::user()->grade_id; @endphp
+                @php $is_disabled = 7 > Auth::user()->grade_id; $btnClass = 'btn-junior-high'; @endphp
                 <a
                     href="{{ $is_disabled
                         ? 'javascript:void(0)'
                         : route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 7])
                     }}" 
-                    class="sidebar-btn btn-junior-high text-decoration-none text-center
-                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}">
+                    class="sidebar-btn {{ $btnClass }} text-decoration-none text-center ajax-nav
+                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}"
+                        data-date="{{ $targetDate->format('Y-m') }}" 
+                        data-grade="7">
                         中学校1年生
                 </a>
 
-                @php $is_disabled = 8 > Auth::user()->grade_id; @endphp
+                @php $is_disabled = 8 > Auth::user()->grade_id; $btnClass = 'btn-junior-high'; @endphp
                 <a
                     href="{{ $is_disabled
                         ? 'javascript:void(0)'
                         : route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 8])
                     }}" 
-                    class="sidebar-btn btn-junior-high text-decoration-none text-center
-                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}">
+                    class="sidebar-btn {{ $btnClass }} text-decoration-none text-center ajax-nav
+                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}"
+                        data-date="{{ $targetDate->format('Y-m') }}" 
+                        data-grade="8">
                         中学校2年生
                 </a>
 
-                @php $is_disabled = 9 > Auth::user()->grade_id; @endphp
+                @php $is_disabled = 9 > Auth::user()->grade_id; $btnClass = 'btn-junior-high'; @endphp
                 <a
                     href="{{ $is_disabled
                         ? 'javascript:void(0)'
                         : route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 9])
                     }}" 
-                    class="sidebar-btn btn-junior-high text-decoration-none text-center
-                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}">
+                    class="sidebar-btn {{ $btnClass }} text-decoration-none text-center ajax-nav
+                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}"
+                        data-date="{{ $targetDate->format('Y-m') }}" 
+                        data-grade="9">
                         中学校3年生
                 </a>
                 
-                @php $is_disabled = 10 > Auth::user()->grade_id; @endphp
+                @php $is_disabled = 10 > Auth::user()->grade_id; $btnClass = 'btn-high-school'; @endphp
                 <a
                     href="{{ $is_disabled
                         ? 'javascript:void(0)'
                         : route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 10])
                     }}" 
-                    class="sidebar-btn btn-high-school text-decoration-none text-center
-                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}">
+                    class="sidebar-btn {{ $btnClass }} text-decoration-none text-center ajax-nav
+                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}"
+                        data-date="{{ $targetDate->format('Y-m') }}" 
+                        data-grade="10">
                         高校1年生
                 </a>
                 
-                @php $is_disabled = 11 > Auth::user()->grade_id; @endphp
+                @php $is_disabled = 11 > Auth::user()->grade_id; $btnClass = 'btn-high-school'; @endphp
                 <a
                     href="{{ $is_disabled
                         ? 'javascript:void(0)'
                         : route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 11])
                     }}" 
-                    class="sidebar-btn btn-high-school text-decoration-none text-center
-                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}">
+                    class="sidebar-btn {{ $btnClass }} text-decoration-none text-center ajax-nav
+                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}"
+                        data-date="{{ $targetDate->format('Y-m') }}" 
+                        data-grade="11">
                         高校2年生
                 </a>
 
-                @php $is_disabled = 12 > Auth::user()->grade_id; @endphp
+                @php $is_disabled = 12 > Auth::user()->grade_id; $btnClass = 'btn-high-school'; @endphp
                 <a
                     href="{{ $is_disabled
                         ? 'javascript:void(0)'
                         : route('user.show.curriculum', ['date' => $targetDate->format('Y-m'), 'grade' => 12])
                     }}" 
-                    class="sidebar-btn btn-high-school text-decoration-none text-center
-                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}">
+                    class="sidebar-btn {{ $btnClass }} text-decoration-none text-center ajax-nav
+                        {{ $is_disabled ? 'sidebar-btn--disabled' : '' }}"
+                        data-date="{{ $targetDate->format('Y-m') }}" 
+                        data-grade="12">
                         高校3年生
                 </a>
             </div>

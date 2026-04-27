@@ -1,56 +1,68 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // ページ全体のクリックを監視
     document.addEventListener('click', function (e) {
-        // ajax-nav または sidebar-btn を探す
-        const link = e.target.closest('.ajax-nav') || e.target.closest('.sidebar-btn');
-        
-        // ボタンがない、または無効化されている場合は無視
+        // ajax-nav クラス、またはそれを含むリンクを探す
+        const link = e.target.closest('.ajax-nav');
         if (!link || link.classList.contains('sidebar-btn--disabled')) return;
 
-        // data-date がない要素（戻るボタンなど）は Ajax 対象外にする
+        e.preventDefault(); // ページリロードを阻止
+
         const date = link.dataset.date;
-        if (!date) return; 
+        const grade = link.dataset.grade;
 
-        e.preventDefault();
+        console.log("【Ajax送信】", { date, grade });
 
-        // grade は link になければ、他のナビリンクから現在の値を探して補完する
-        let grade = link.dataset.grade;
-        if (!grade) {
-            const anyNav = document.querySelector('.ajax-nav[data-grade]');
-            grade = anyNav ? anyNav.dataset.grade : '';
-        }
-
-        console.log("通信開始:", { date, grade });
-
-        fetch('/user/curriculum_list?date=' + date + '&grade=' + grade, {
-            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        // サーバーへリクエスト
+        fetch(`/user/curriculum_list?date=${date}&grade=${grade}`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
         .then(data => {
-            console.log("受信データ:", data);
+            console.log("【データ受信】", data);
 
-            // 1. メインコンテンツ更新
+            // 1. カード一覧エリアを書き換え
             const listContainer = document.getElementById('curriculum-list');
-            if (listContainer) listContainer.innerHTML = data.html;
+            if (listContainer && data.html) {
+                listContainer.innerHTML = data.html;
+            }
 
-            // 2. タイトル更新
+            // 2. 年月タイトルを書き換え
             const titleElement = document.getElementById('calendar-title');
-            if (titleElement) titleElement.textContent = data.displayDate + ' スケジュール';
+            if (titleElement && data.displayDate) {
+                titleElement.textContent = data.displayDate + ' スケジュール';
+            }
 
-            // 3. ナビゲーション（◀▶）更新
-            document.querySelectorAll('.ajax-nav').forEach(nav => {
-                nav.dataset.date = nav.textContent.includes('◀') ? data.prevMonth : data.nextMonth;
-                nav.dataset.grade = data.selectedGrade; // 現在の学年をセット
-            });
-
-            // 4. 学年バッジ更新
+            // 3. 右上の「青い学年バッジ」を書き換え
             const gradeBadge = document.querySelector('.selected-grade-label');
-            if (gradeBadge) gradeBadge.textContent = data.gradeName;
+            if (gradeBadge && data.gradeName) {
+                gradeBadge.textContent = data.gradeName;
+                // バッジの色も学年に合わせて変えたい場合はクラスを差し替える
+                gradeBadge.className = `sidebar-btn py-1 px-3 selected-grade-label ${
+                    data.selectedGrade <= 6 ? 'btn-elementary' : 
+                    (data.selectedGrade <= 9 ? 'btn-junior-high' : 'btn-high-school')
+                }`;
+            }
 
-            // 5. 左メニュー（学年ボタン）更新
-            document.querySelectorAll('.sidebar-btn[data-grade]').forEach(btn => {
-                btn.dataset.date = data.currentMonth; // 現在表示中の月をセット
+            // 4. 全ボタン（◀▶と左メニュー）の data-date を現在の月に更新
+            // これで「5月を見てる時に学年を変えても5月のまま」になります
+            document.querySelectorAll('.ajax-nav').forEach(nav => {
+                nav.dataset.date = data.currentMonth;
+                // ◀▶ボタンだけは、次の「月移動」のために専用の月をセット
+                if (nav.textContent.includes('◀')) nav.dataset.date = data.prevMonth;
+                if (nav.textContent.includes('▶')) nav.dataset.date = data.nextMonth;
+                
+                // 現在の学年もセットし直す（月移動しても学年がズレないように）
+                nav.dataset.grade = data.selectedGrade;
             });
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.error('Error:', error);
+            alert('データの取得に失敗しました。');
+        });
     });
 });
