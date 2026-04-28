@@ -13,10 +13,10 @@
     <header>
         <nav>
             <ul>
-                <li><a href="#">授業管理</a></li>
-                <li><a href="#">お知らせ管理</a></li>
-                <li><a href="#">バナー管理</a></li>
-                <li><a href="#">ログアウト</a></li>
+                <li><a href="{{ route('admin.show.curriculum.list') }}">授業管理</a></li>
+                <li><a href="{{ route('admin.show.article.list') }}">お知らせ管理</a></li>
+                <li><a href="{{ route('admin.show.banner.edit') }}">バナー管理</a></li>
+                <li><a href="#">ログアウト</a></li> {{-- ログアウトは後ほど --}}
             </ul>
         </nav>
     </header>

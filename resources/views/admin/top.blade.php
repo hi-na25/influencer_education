@@ -9,11 +9,7 @@
             {{-- ★四角い枠（カードデザイン） --}}
             <div class="card shadow-sm border border-secondary-subtle">
                 <div class="card-body p-5">
-                    {{-- タイトル --}}
-                    <h4 class="card-title text-center mb-5 font-weight-bold">
-                        管理者情報
-                    </h4>
-
+                    
                     {{-- ユーザーネーム --}}
                     <div class="row mb-4 fs-5">
                         <div class="col-md-4 text-muted">ユーザーネーム：</div>
