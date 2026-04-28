@@ -22,33 +22,28 @@ Route::get('/', function () {
 
 
 // --- ユーザー側 ---
-Route::prefix('user')->name('user.')->group(function () {
+Route::prefix('user')->namespace('User')->name('user.')->group(function () {
 
-    //　ユーザー時間割
-    Route::get('/curriculum_list', [CurriculumController::class, 'showCurriculumList'])->name('show.curriculum');
+    // ユーザー時間割
+    Route::get('/curriculum_list', [\App\Http\Controllers\User\CurriculumController::class, 'showCurriculumList'])->name('show.curriculum');
 
-
-    // 配信画面 (指示書：パスは '/delivery/{id}', nameは 'show.delivery')
-    // フルネームは 'user.show.delivery'
-    Route::get('/delivery/{id}', [CurriculumController::class, 'showDelivery'])->name('show.delivery');
-
+    // 配信画面
+    Route::get('/delivery/{id}', [\App\Http\Controllers\User\CurriculumController::class, 'showDelivery'])->name('show.delivery');
 
     // トップページ
-    Route::get('/top', [TopController::class, 'showTop'])->name('show.top');
-
-
+    Route::get('/top', [\App\Http\Controllers\User\TopController::class, 'showTop'])->name('show.top');
 });
 
 
 
 // --- 管理画面側 ---
-Route::prefix('admin')->name('admin.')->group(function () {
-    
+Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
+
 
     // 管理者バナー
-    Route::get('/banner_edit', [BannerController::class, 'showBannerEdit'])->name('show.banner.edit');
+    Route::get('/banner_edit', [\App\Http\Controllers\Admin\BannerController::class, 'showBannerEdit'])->name('show.banner.edit');
 
 
-
+    // トップページ
+    Route::get('/top', [\App\Http\Controllers\Admin\TopController::class, 'showTop'])->name('show.top');
 });
-
