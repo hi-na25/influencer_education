@@ -10,10 +10,12 @@ class TopController extends Controller
 {
     public function showTop()
     {
-        // ログイン中の管理者情報を取得（もし画面で名前などを出したい場合）
-        $user = Auth::user();
+        // 【テスト用】IDが1の管理者を強制的にログイン状態にする
+        // 一度実行して名前が出たら、この一行は消してOKです
+        \Illuminate\Support\Facades\Auth::guard('admin')->loginUsingId(1);
 
-        // resources/views/admin/top.blade.php を表示する
+        $user = Auth::guard('admin')->user();
+
         return view('admin.top', compact('user'));
     }
 }
