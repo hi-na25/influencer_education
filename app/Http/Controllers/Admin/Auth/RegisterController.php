@@ -58,7 +58,7 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @return User
+     * @return Admin
      */
     protected function create(array $data)
     {
