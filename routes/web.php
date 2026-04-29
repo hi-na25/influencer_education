@@ -58,3 +58,7 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     // 管理ユーザー新規登録画面
     Route::get('/register', [\App\Http\Controllers\Admin\RegisterController::class, 'showRegisterForm'])->name('show.register');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
