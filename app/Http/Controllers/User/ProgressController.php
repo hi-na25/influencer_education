@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Models\Curriculum;
@@ -33,6 +33,6 @@ class ProgressController extends Controller
         $curriculums = Curriculum::all();
 
         // データを連れて progress.blade.php へ行く
-        return view('progress', compact('userName', 'currentGrade', 'grades', 'curriculums'));
+        return view('curriculum_progress', compact('userName', 'currentGrade', 'grades', 'curriculums'));
     }
 }

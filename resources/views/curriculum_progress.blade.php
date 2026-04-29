@@ -33,7 +33,7 @@
         <a href="/" style="text-decoration: none; color: #333;">←戻る</a>
         <div class="profile-section">
             <div class="avatar">
-                <img src="images/profile.png" alt="avatar" style="width: 100%; height: 100%; object-fit: cover;">
+                <img src="{{ asset('storage/images/profile/profile.png') }}" alt="avatar" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
 
             <div class="user-info">

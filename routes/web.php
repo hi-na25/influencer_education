@@ -17,4 +17,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/progress', [App\Http\Controllers\ProgressController::class, 'index']);
+Route::get('/progress', [App\Http\Controllers\User\ProgressController::class, 'index']);
