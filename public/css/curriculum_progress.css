@@ -1,0 +1,23 @@
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; font-family: sans-serif; }
+        .profile-section { display: flex; align-items: center; margin-top: 30px; }
+        .avatar { width: 150px; height: 150px; border: 1px solid #ccc; margin-right: 20px; background-color: #f9f9f9; }
+        .grade-badge { display: inline-block; background-color: #B2EBF2; color: #00838F; padding: 5px 15px; border-radius: 20px; margin-top: 10px; }
+        
+        /* グリッドの設定 */
+        .progress-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .grade-card h2 {
+            font-size: 16px;
+            color: #00838F;
+            display: inline-block;
+            padding: 3px 15px;
+            border-radius: 15px;
+        }
+        .grade-card ul { list-style: none; padding: 0; }
+        .grade-card li { margin-bottom: 8px; font-size: 14px; }
+        .status-done { color: #FF5252; font-weight: bold; margin-right: 5px; }
