@@ -73,4 +73,9 @@ class RegisterController extends Controller
     {
         return Auth::guard('admin');
     }
+
+    public function showRegistrationForm()
+    {
+        return view('admin.auth.register'); // admin の方を指定
+    }
 }
