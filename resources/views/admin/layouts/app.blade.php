@@ -16,7 +16,14 @@
                 <li><a href="{{ route('admin.show.curriculum.list') }}">授業管理</a></li>
                 <li><a href="{{ route('admin.show.article.list') }}">お知らせ管理</a></li>
                 <li><a href="{{ route('admin.show.banner.edit') }}">バナー管理</a></li>
-                <li><a href="#">ログアウト</a></li> {{-- ログアウトは後ほど --}}
+                <li><a href="{{ route('admin.logout') }}"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    ログアウト
+                </a>
+
+                <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </ul>
         </nav>
     </header>

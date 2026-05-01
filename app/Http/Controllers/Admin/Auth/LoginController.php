@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -47,5 +48,23 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         return view('admin.auth.login'); // admin の方を指定
+    }
+
+    /**
+     * ログアウト処理（オーバーライド）
+     */
+    public function logout(Request $request)
+    {
+        // 1. 管理者としてログアウトを実行
+        $this->guard()->logout();
+
+        // 2. セッションを無効化（セキュリティのため）
+        $request->session()->invalidate();
+
+        // 3. セッションのトークンを再生成
+        $request->session()->regenerateToken();
+
+        // 4. 【ここが重要！】ログアウト後の飛ばし先を管理者ログイン画面に！
+        return redirect()->route('admin.show.login');
     }
 }

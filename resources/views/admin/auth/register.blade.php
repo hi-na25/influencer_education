@@ -11,6 +11,10 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
 
+                <div class="text-end mt-5">
+                    <a href="{{ route('admin.show.login') }}" class="text-decoration-none link-dark">ログインはこちら</a>
+                </div>
+
                 <div class="card-header text-center mt-5">
                     <h4>{{ __('新規管理ユーザー登録') }}</h4>
                 </div>
