@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\User\CurriculumController;
 use App\Http\Controllers\User\TopController;
+use App\Http\Controllers\Admin\Auth\RegisterController; // ← これが必要です！
+use App\Http\Controllers\Admin\Auth\LoginController;    // ついでにログイン用も！
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +59,9 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
 
     // 管理ユーザー新規登録画面
     Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('show.register');
+
+    // RegisterControllerの中にある register というメソッドを呼ぶようにします
+    Route::post('/register', 'Auth\RegisterController@register')->name('register');
 
     // ログアウト時
     Route::post('/logout', 'Auth\LoginController@logout')->name('logout');

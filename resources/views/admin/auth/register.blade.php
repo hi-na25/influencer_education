@@ -15,22 +15,36 @@
                     <a href="{{ route('admin.show.login') }}" class="text-decoration-none link-dark">ログインはこちら</a>
                 </div>
 
-                <div class="card-header text-center mt-5">
+                <div class="card-header text-center">
                     <h4>{{ __('新規管理ユーザー登録') }}</h4>
                 </div>
 
 
                 <div class="card-body p-4">
-                    <form method="POST" action="{{ route('admin.show.register') }}">
+                    <form method="POST" action="{{ route('admin.register') }}">
                         @csrf
 
                         <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('名前') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('ユーザーネーム') }}</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                 @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('カナ') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="kana" type="text" class="form-control @error('kana') is-invalid @enderror" name="kana" value="{{ old('kana') }}" required autocomplete="kana">
+
+                                @error('kana')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

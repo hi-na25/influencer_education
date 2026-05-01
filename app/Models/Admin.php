@@ -15,9 +15,10 @@ class Admin extends Authenticatable
     // テーブル名を明示
     protected $table = 'admins';
 
-    // ログインなどで使う情報（ER図にあるカラムに合わせて）
+    // ログイン、新規登録などで使う情報（ER図にあるカラムに合わせて）
     protected $fillable = [
         'name',
+        'kana',
         'email',
         'password',
     ];
@@ -26,6 +27,4 @@ class Admin extends Authenticatable
     protected $hidden = [
         'password',
     ];
-    
 }
-
