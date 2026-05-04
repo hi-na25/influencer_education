@@ -21,14 +21,18 @@
                 </div>
 
                 <div class="card-body p-4">
-                    <form method="POST" action="{{ route('admin.show.login') }}">
+                    <form method="POST" action="{{ route('admin.login') }}">
                         @csrf
 
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('メールアドレス') }}</label>
                             
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autofocus>
+                                <input id="email" type="email"
+                                    class="form-control @error('email') is-invalid @enderror"
+                                    name="email"
+                                    value="{{ old('email') }}" required autofocus
+                                    inputmode="email">
                                 @error('email')
                                     <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                                 @enderror

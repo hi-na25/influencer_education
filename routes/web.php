@@ -57,6 +57,9 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     // ログイン画面
     Route::get('/login', 'Auth\LoginController@showLoginForm')->name('show.login');
 
+    // ログイン実行用（POST）
+    Route::post('/login', 'Auth\LoginController@login')->name('login');
+
     // 管理ユーザー新規登録画面
     Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('show.register');
 

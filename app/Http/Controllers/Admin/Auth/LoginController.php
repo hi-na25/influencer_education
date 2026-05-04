@@ -45,6 +45,20 @@ class LoginController extends Controller
         return Auth::guard('admin');
     }
 
+    // バリデーション
+    protected function validateLogin(Request $request)
+    {
+        $request->validate([
+            $this->username() => 'required|string|email',
+            'password' => 'required|string|min:8',
+        ], [
+            'email.required' => 'メールアドレスを入力してください。',
+            'email.regex' => __('auth.failed'), // 全角が混ざってても「正しくありません」と出す
+            'password.required' => 'パスワードを入力してください。',
+            'password.min' => __('auth.failed'),
+        ]);
+    }
+
     public function showLoginForm()
     {
         return view('admin.auth.login'); // admin の方を指定
