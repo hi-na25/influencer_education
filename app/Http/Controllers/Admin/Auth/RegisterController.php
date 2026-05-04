@@ -115,7 +115,7 @@ class RegisterController extends Controller
         return redirect()->route('admin.login');
     }
 
-    // さっき提案した「強制的に戻す」やつもここに入れると確実です
+    // 強制的に戻す
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
         throw (new \Illuminate\Validation\ValidationException($validator))

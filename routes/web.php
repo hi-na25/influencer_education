@@ -41,18 +41,25 @@ Route::prefix('user')->namespace('User')->name('user.')->group(function () {
 // --- 管理画面側 ---
 Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
 
+    // ここに書いたルートは「ログインした管理者」しか見れない
+    Route::group(['middleware' => ['auth:admin']], function () {
 
-    // 管理者バナー
-    Route::get('/banner_edit', 'BannerController@showBannerEdit')->name('show.banner.edit');
+        // 管理者バナー
+        Route::get('/banner_edit', 'BannerController@showBannerEdit')->name('show.banner.edit');
 
-    // トップページ
-    Route::get('/top', 'TopController@showTop')->name('show.top');
+        // トップページ
+        Route::get('/top', 'TopController@showTop')->name('show.top');
 
-    // 授業一覧画面
-    Route::get('/curriculum_list', 'CurriculumController@showCurriculumList')->name('show.curriculum.list');
+        // 授業一覧画面
+        Route::get('/curriculum_list', 'CurriculumController@showCurriculumList')->name('show.curriculum.list');
 
-    // お知らせ一覧画面
-    Route::get('/article_list', 'ArticleController@showArticleList')->name('show.article.list');
+        // お知らせ一覧画面
+        Route::get('/article_list', 'ArticleController@showArticleList')->name('show.article.list');
+
+        // ログアウト時
+        Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+    });
+
 
     // ログイン画面
     Route::get('/login', 'Auth\LoginController@showLoginForm')->name('show.login');
@@ -63,9 +70,6 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     // 管理ユーザー新規登録画面
     Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('show.register');
 
-    // RegisterControllerの中にある register というメソッドを呼ぶようにします
+    // 管理ユーザー新規登録画面実行用
     Route::post('/register', 'Auth\RegisterController@register')->name('register');
-
-    // ログアウト時
-    Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 });
