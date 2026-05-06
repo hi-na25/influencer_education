@@ -11,5 +11,9 @@ class Article extends Model
     // 今回のテーブル名は 'articles' なので、それを明示します
     protected $table = 'articles';
 
+    protected $casts = [
+        'posted_date' => 'datetime',
+    ];
+
     // もし主キー（id）以外の名前を使っている場合は必要ですが、今回は id なので不要です
 }
