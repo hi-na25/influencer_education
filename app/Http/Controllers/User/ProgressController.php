@@ -4,35 +4,40 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Models\Curriculum;
+use App\Models\User;
+use App\Models\Grade;
 
 class ProgressController extends Controller
 {
     public function index()
     {
             // --- 追加：ユーザー情報 ---
-    $userName = '心愛あいす'; // ここを好きな名前に変えられます！
-    $currentGrade = '小学校１年生';
+    $user = User::find(1); // IDが1番のユーザーをDBから探す
+    $userName = $user->name;
+    $currentGrade = $user->grade->name; // リレーションを使って学年名を取る
     
     // --- 授業データ（既存のコード） ---
-    $grades = [
-            ['id' => 1, 'name' => '小学校1年生', 'color' => '#B2EBF2'],
-            ['id' => 2, 'name' => '小学校2年生', 'color' => '#B2EBF2'],
-            ['id' => 3, 'name' => '小学校3年生', 'color' => '#B2EBF2'],
-            ['id' => 4, 'name' => '小学校4年生', 'color' => '#B2EBF2'],
-            ['id' => 5, 'name' => '小学校5年生', 'color' => '#B2EBF2'],
-            ['id' => 6, 'name' => '小学校6年生', 'color' => '#B2EBF2'],
-            ['id' => 7, 'name' => '中学校1年生', 'color' => '#18f6dc'],
-            ['id' => 8, 'name' => '中学校2年生', 'color' => '#18f6dc'],
-            ['id' => 9, 'name' => '中学校3年生', 'color' => '#18f6dc'],
-            ['id' => 7, 'name' => '高校1年生', 'color' => '#2ef646'],
-            ['id' => 8, 'name' => '高校2年生', 'color' => '#2ef646'],
-            ['id' => 9, 'name' => '高校3年生', 'color' => '#2ef646']
-    ];
+    $grades = Grade::all();
         
         // データベースから全データを取ってくる！
         $curriculums = Curriculum::all();
 
-        // データを連れて progress.blade.php へ行く
-        return view('curriculum_progress', compact('userName', 'currentGrade', 'grades', 'curriculums'));
+        // ログインユーザー（あいすさん）がクリアした授業IDのリストを取得
+    $clearedCurriculumIds = \DB::table('curriculum_progress') // テーブル名変更
+        ->where('users_id', $user->id)
+        ->where('clear_flg', 1)
+        ->pluck('curriculums_id') // カラム名を curriculums_id に変更
+        ->toArray();
+
+    // データを連れて progress.blade.php へ行く
+    return view('curriculum_progress', compact(
+        'user', 
+        'userName', 
+        'currentGrade', 
+        'grades', 
+        'curriculums', 
+        'clearedCurriculumIds'
+    ));
+
     }
 }

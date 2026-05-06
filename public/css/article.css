@@ -1,0 +1,47 @@
+/* 1. 外枠の名前を news-container に変更 */
+.news-container {
+    max-width: 1300px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+/* 2. 本文の名前を news-content__body に変更 */
+.news-content__body {
+    line-height: 2.0;
+    font-size: 18px;
+    color: #333;
+    letter-spacing: 0.05em;
+}
+
+/* 3. ←戻るボタンの設定（ここがポイント！） */
+.news-back-link {
+    display: inline-block;
+    text-decoration: none; /* 下線を消す */
+    margin-bottom: 30px;   /* 下との余白 */
+    color: #333;
+    font-size: 1.2rem;
+    margin-left: -100px;
+}
+
+/* 3-1. 画面幅が 1500px より小さくなった時の設定 */
+@media screen and (max-width: 1500px) {
+    .news-back-link {
+        /* マイナスマージンを解除して、画面内（1300pxの端）に戻す */
+        margin-left: 0; 
+    }
+}
+
+/* 4. 日付の名前を news-content__date に変更 */
+.news-content__date {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* 5. タイトルの名前を news-content__title に変更 */
+.news-content__title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    line-height: 1.4;
+}

@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\User\ArticleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,3 +18,5 @@ Route::get('/', function () {
 });
 
 Route::get('/progress', [App\Http\Controllers\User\ProgressController::class, 'index']);
+
+Route::get('/news/{id}', [\App\Http\Controllers\User\ArticleController::class, 'show'])->name('news.show');

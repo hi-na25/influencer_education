@@ -25,7 +25,7 @@
         <div class="progress-grid">
             @foreach($grades as $grade)
                 <div class="grade-card">
-                    <h2 style="background-color: {{ $grade['color'] }};">{{ $grade['name'] }}</h2>
+                    <h2 style="background-color: {{ $grade->color }};">{{ $grade->name }}</h2>
                     <ul>
                         @foreach($curriculums as $curriculum)
                             {{-- 今表示している「学年」のデータだけを表示する --}}
@@ -34,15 +34,23 @@
                                     <div style="display: flex; align-items: center;">
                                         {{-- 受講済エリアの幅を 60px に固定して確保 --}}
                                         <div style="width: 50px; flex-shrink: 0;">
-                                            @if($curriculum->alway_delivery_flg == 1)
-                                                <span style="color: red; font-weight: bold; font-size: 0.8rem;">受講済</span>
+                                            @if(in_array($curriculum->id, $clearedCurriculumIds))
+                                               <span style="color: #ff4d4d; font-weight: bold;">受講済</span>
                                             @endif
                                         </div>
     
                                        {{-- タイトルをリンクにする --}}
-                                       <a href="/delivery/{{ $curriculum->id }}" style="text-decoration: none; color: #333;">
-                                           {{ $curriculum->title }}
-                                       </a>
+                                       @if($grade->id <= $user->grade_id)
+                                           {{-- 自分の学年以下ならクリックできる --}}
+                                           <a href="/delivery/{{ $curriculum->id }}" style="text-decoration: none; color: #333;">
+                                               {{ $curriculum->title }}
+                                           </a>
+                                       @else
+                                           {{-- 自分の学年より上ならクリックできない（色を薄くする） --}}
+                                           <span style="color: #bbb; cursor: not-allowed;">
+                                               {{ $curriculum->title }}
+                                           </span>
+                                       @endif
                                     </div>
                                 </li>
                             @endif
