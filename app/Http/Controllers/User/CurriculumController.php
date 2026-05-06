@@ -99,7 +99,7 @@ class CurriculumController extends Controller
         ]);
     }
 
-    public function showDelivery($id)
+    public function showDelivery(int $id)
     {
         $curriculum = Curriculum::findOrFail($id);
         return view('user.delivery', ['curriculum' => $curriculum]);

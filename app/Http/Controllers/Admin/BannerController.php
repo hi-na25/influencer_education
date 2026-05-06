@@ -3,12 +3,91 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Banner;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 
 class BannerController extends Controller
 {
-    // この「関数」を追加する
+    // バナー管理画面の表示
     public function showBannerEdit()
     {
-        return view('admin.banner_edit'); 
+        // 1. 保存されているバナーを全部持ってくる
+        $banners = Banner::all();
+
+        // 2. viewにバナー一覧を渡す
+        return view('admin.banner_edit', compact('banners'));
+    }
+
+
+    // バナーの保存処理
+    public function store(Request $request)
+    {
+        // 1. 削除対象の処理（「ー」ボタンで消されたIDのリストが届く想定）
+        if ($request->has('deleted_ids')) {
+            foreach ($request->deleted_ids as $id) {
+                $banner = Banner::find($id);
+                if ($banner) {
+                    // 1. サーバー内の画像ファイルを削除
+                    // DBには "storage/images/banner/filename.jpg" という形式で入っている。
+                    // Storage::delete() を使うときは "public/images/banner/filename.jpg" というパスにする必要があるから変換する。
+                    $filePath = str_replace('storage/', 'public/', $banner->image);
+
+                    if (Storage::exists($filePath)) {
+                        Storage::delete($filePath);
+                    }
+
+                    // 2. データベースのレコードを削除
+                    $banner->delete();
+                }
+            }
+        }
+
+        // 2. フォームから届いた全バナーデータの処理
+        $bannersData = $request->input('banners', []); // ファイル以外のデータ
+        $bannersFiles = $request->file('banners', []); // ファイルデータ
+
+        foreach ($bannersData as $key => $data) {
+            $file = $bannersFiles[$key]['image'] ?? null;
+
+            // 【条件分岐：保存するかしないか】
+
+            // A. 新規登録（IDがなくて、ファイルがある場合）
+            if (!isset($data['id']) && $file) {
+                $this->saveBanner($file);
+            }
+
+            // B. 既存更新（IDがあって、新しいファイルが選ばれた場合のみ）
+            elseif (isset($data['id']) && $file) {
+                $banner = Banner::find($data['id']);
+                if ($banner) {
+                    // 古いファイルを消してから、新しいのを保存する処理を入れると親切！
+                    $this->saveBanner($file, $banner);
+                }
+            }
+
+            // C. それ以外（IDはあるけどファイルが空、または両方空）は「何もしない」
+            // これで「変更しなかったものは保存しない」を実現
+        }
+
+        return redirect()->route('admin.show.banner.edit')->with('success', '更新完了！');
+    }
+
+
+    // 保存処理を共通化したプライベートメソッド
+    private function saveBanner(UploadedFile $file, $banner = null)
+    {
+        $fileName = $file->getClientOriginalName();
+        $file->storeAs('public/images/banner', $fileName);
+        $dbPath = 'storage/images/banner/' . $fileName;
+
+        if ($banner) {
+            // 更新の場合
+            $banner->update(['image' => $dbPath]);
+        } else {
+            // 新規の場合
+            Banner::create(['image' => $dbPath]);
+        }
     }
 }

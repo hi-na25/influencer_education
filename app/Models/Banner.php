@@ -9,10 +9,16 @@ class Banner extends Model
 {
     use HasFactory;
 
-    protected $table = 'banners'; 
+    protected $table = 'banners';
 
     protected $fillable = [
         'image',
     ];
-    
+
+
+
+    public function getImageUrlAttribute()
+    {
+        return asset($this->image);
+    }
 }
