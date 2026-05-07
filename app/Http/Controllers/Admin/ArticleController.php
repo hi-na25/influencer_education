@@ -49,4 +49,14 @@ class ArticleController extends Controller
         // resources/views/admin/article_list.blade.php を表示
         return view('admin.article_list', compact('articles'));
     }
+
+    public function destroy($id)
+    {
+        // 指定されたIDのお知らせを探して削除
+        $article = Article::findOrFail($id);
+        $article->delete();
+
+        // 一覧画面にリダイレクト
+        return redirect()->route('admin.articles.index');
+    }
 }

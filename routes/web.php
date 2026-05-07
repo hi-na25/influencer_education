@@ -31,5 +31,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // お知らせ更新処理 (PUT)
     Route::put('/articles/{id}/update', [AdminArticleController::class, 'update'])->name('articles.update');
 
-    Route::get('/admin/articles', [App\Http\Controllers\Admin\ArticleController::class, 'index'])->name('admin.articles.index');
+    Route::get('/articles', [App\Http\Controllers\Admin\ArticleController::class, 'index'])->name('articles.index');
+
+    Route::get('/articles/create', [App\Http\Controllers\Admin\ArticleController::class, 'create'])->name('articles.create');
+
+    // お知らせ削除処理
+    Route::delete('/articles/{id}', [App\Http\Controllers\Admin\ArticleController::class, 'destroy'])->name('articles.destroy');
 });

@@ -9,7 +9,7 @@
 <body>
 
 <div class="container">
-    <a href="{{ url('/') }}" class="back-link">←戻る</a>
+    <a href="{{ route('admin.articles.index') }}" class="back-link">←戻る</a>
     <h1>お知らせ変更</h1>
 
     <form action="{{ route('admin.articles.update', $article->id) }}" method="POST">
