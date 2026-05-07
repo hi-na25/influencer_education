@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\User\ArticleController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,15 @@ Route::get('/', function () {
 Route::get('/progress', [App\Http\Controllers\User\ProgressController::class, 'index']);
 
 Route::get('/news/{id}', [\App\Http\Controllers\User\ArticleController::class, 'show'])->name('news.show');
+
+// 管理者用グループ（URLが /admin/... になります）
+Route::prefix('admin')->name('admin.')->group(function () {
+    
+    // お知らせ編集画面の表示 (GET)
+    Route::get('/articles/{id}/edit', [AdminArticleController::class, 'edit'])->name('articles.edit');
+    
+    // お知らせ更新処理 (PUT)
+    Route::put('/articles/{id}/update', [AdminArticleController::class, 'update'])->name('articles.update');
+
+    Route::get('/admin/articles', [App\Http\Controllers\Admin\ArticleController::class, 'index'])->name('admin.articles.index');
+});
