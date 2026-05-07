@@ -44,14 +44,16 @@ class BannerController extends Controller
             }
         }
 
-        // 2. フォームから届いた全バナーデータの処理
-        $bannersData = $request->input('banners', []); // ファイル以外のデータ
-        $bannersFiles = $request->file('banners', []); // ファイルデータ
+        // 2. データの取得
+        $bannersData = $request->input('banners', []);
+        $bannersFiles = $request->file('banners', []);
 
-        foreach ($bannersData as $key => $data) {
+        // ★修正ポイント：テキストデータとファイルの「すべてのキー」を合体させてループ回す
+        $allKeys = array_unique(array_merge(array_keys($bannersData), array_keys($bannersFiles)));
+
+        foreach ($allKeys as $key) {
+            $data = $bannersData[$key] ?? [];
             $file = $bannersFiles[$key]['image'] ?? null;
-
-            // 【条件分岐：保存するかしないか】
 
             // A. 新規登録（IDがなくて、ファイルがある場合）
             if (!isset($data['id']) && $file) {
@@ -62,13 +64,13 @@ class BannerController extends Controller
             elseif (isset($data['id']) && $file) {
                 $banner = Banner::find($data['id']);
                 if ($banner) {
-                    // 古いファイルを消してから、新しいのを保存する処理を入れると親切！
+                    // 古いファイルを消してから更新
+                    $oldPath = str_replace('storage/', 'public/', $banner->image);
+                    \Illuminate\Support\Facades\Storage::delete($oldPath);
+
                     $this->saveBanner($file, $banner);
                 }
             }
-
-            // C. それ以外（IDはあるけどファイルが空、または両方空）は「何もしない」
-            // これで「変更しなかったものは保存しない」を実現
         }
 
         return redirect()->route('admin.show.banner.edit')->with('success', '更新完了！');

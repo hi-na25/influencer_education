@@ -47,6 +47,9 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
         // 管理者バナー
         Route::get('/banner_edit', 'BannerController@showBannerEdit')->name('show.banner.edit');
 
+        // バナーの一括更新（保存・削除）
+        Route::post('/banner/update', 'BannerController@store')->name('update.banner.edit');
+
         // トップページ
         Route::get('/top', 'TopController@showTop')->name('show.top');
 
