@@ -9,6 +9,7 @@
     
     <link rel="stylesheet" href="{{ asset('css/admin/common.css') }}">
 </head>
+
 <body class="bg-white ">
     <header>
         <nav>
@@ -21,7 +22,7 @@
                     ログアウト
                 </a>
 
-                <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>
             </ul>
@@ -29,12 +30,13 @@
     </header>
 
     <main>
-        {{-- ここに各画面（子）の中身が差し込まれる！ --}}
+        {{-- ここに各画面（子）の中身が差し込まれる --}}
         @yield('content')
     </main>
 
-    {{-- Bootstrapの動き（JS）も念のため最後に入れておくと安心 --}}
+    {{-- 1. 共通ライブラリを読み込む --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+    {{-- 2. その後に、各画面ごとのJSを流し込む --}}
+    @stack('scripts')
 </body>
 </html>

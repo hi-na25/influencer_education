@@ -12,7 +12,7 @@ header {
 
 header nav ul {
     list-style: none;
-    display: flex; /* 横並びにする魔法 */
+    display: flex; /* 横並び */
     gap: 10px;     /* メニューの間隔 */
     margin: 0;
     padding: 0;
@@ -43,3 +43,27 @@ header nav li:not(:last-child) a {
     margin-right: 10px;
 }
 
+
+
+
+
+/* バナーのプレビュー枠 */
+.banner-preview-wrapper {
+    width: 150px;
+}
+
+/* バナーの入力欄 */
+.banner-input-width {
+    width: 300px;
+}
+
+/* 丸形操作ボタンの共通設定 */
+.btn-circle {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
