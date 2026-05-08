@@ -72,6 +72,13 @@
     transition: 0.3s;
 }
 
+/* 無効化されたボタンの挙動をCSSで制御 */
+.sidebar-btn--disabled {
+    pointer-events: none; /* クリックイベントを完全に無効化 */
+    cursor: default;      /* カーソルを指マークにしない */
+    opacity: 0.6;         /* 見た目で「押せない」感を出す（既にあるなら調整不要） */
+}
+
 /* 小学校用ボタンカラー */
 .btn-elementary {
     background-color: #66becf;

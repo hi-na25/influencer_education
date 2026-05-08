@@ -2,7 +2,7 @@
 
     @foreach($curriculums as $item)
         <div class="col-md-4 mb-4">
-            <div class="card h-100 border-0 shadow-sm bg-white curriculum-card">                            
+            <div class="card h-100 shadow-sm bg-white curriculum-card">                            
                 <div class="p-3 pb-0">
                     {{-- 画像がある場合 --}}
                     @if($item->thumbnail)
