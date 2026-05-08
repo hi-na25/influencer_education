@@ -3,16 +3,16 @@
 @section('title', 'バナー管理')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid px-3">
         {{-- 上部のナビ部分 --}}
-        <div class="row mb-4">
-            <div class="col-12 d-flex align-items-center fs-5">
+        <div class="row mb-3">
+            <div class="col-12 d-flex align-items-center fs-5 p-3">
                 <a href="{{ route('admin.show.top') }}" class="text-dark fw-bold text-decoration-none">←戻る</a>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-lg-9 mx-auto">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h2 class="m-0">バナー管理</h2>
                 </div>
