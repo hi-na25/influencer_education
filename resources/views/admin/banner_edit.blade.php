@@ -17,7 +17,6 @@
                     <h2 class="m-0">バナー管理</h2>
                 </div>
 
-                {{-- JSにURLを渡すための場所。ここだけはPHP(asset)を使ってOK --}}
                 <div id="no-image-url" data-url="https://placehold.co/150x150?text=No+Image" class="d-none"></div>
 
                 <form action="{{ route('admin.update.banner.edit') }}" method="POST" enctype="multipart/form-data" id="banner-form">

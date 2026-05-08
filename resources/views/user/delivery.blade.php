@@ -18,8 +18,8 @@
         <li><strong>説明文:</strong> {{ $curriculum->description }}</li>
     </ul>
 
-    <div style="margin-top: 20px; padding: 20px; border: 1px dashed #ccc;">
-        <p>※ここには本来動画プレイヤーなどが入ります（他担当者用メモ）</p>
-    </div>
+    
+    <p>※ここには本来動画プレイヤーなどが入ります（他担当者用メモ）</p>
+    
 </body>
 </html>
