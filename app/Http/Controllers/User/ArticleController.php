@@ -14,6 +14,6 @@ class ArticleController extends Controller
     $article = Article::findOrFail($id);
     
     // 画面（Blade）にデータを渡す
-    return view('article', compact('article'));
+    return view('User.article', compact('article'));
     }
 }

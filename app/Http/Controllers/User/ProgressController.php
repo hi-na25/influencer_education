@@ -30,7 +30,7 @@ class ProgressController extends Controller
         ->toArray();
 
     // データを連れて progress.blade.php へ行く
-    return view('curriculum_progress', compact(
+    return view('User.curriculum_progress', compact(
         'user', 
         'userName', 
         'currentGrade', 
