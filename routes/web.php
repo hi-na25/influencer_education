@@ -22,6 +22,13 @@ Route::get('/progress', [App\Http\Controllers\User\ProgressController::class, 'i
 
 Route::get('/news/{id}', [\App\Http\Controllers\User\ArticleController::class, 'show'])->name('news.show');
 
+// パスワード変更画面の表示 (GET)
+Route::get('/password/edit', [App\Http\Controllers\User\ProfileController::class, 'editPassword'])->name('password.edit');
+
+// パスワード更新処理 (POST または PATCH)
+Route::post('/password/update', [App\Http\Controllers\User\ProfileController::class, 'updatePassword'])->name('password.update');
+
+
 // 管理者用グループ（URLが /admin/... になります）
 Route::prefix('admin')->name('admin.')->group(function () {
     
