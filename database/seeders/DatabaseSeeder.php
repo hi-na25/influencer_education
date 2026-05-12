@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
         $this->call([
             GradeSeeder::class,    // 1. まず学年を作る（最優先！）
             AdminSeeder::class,
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
             ArticleSeeder::class,
             BannerSeeder::class,
             DeliveryTime::class,
-        ]);  // \App\Models\User::factory(10)->create();
+          　CurriculumsTableSeeder::class
+        ]);
     }
 }

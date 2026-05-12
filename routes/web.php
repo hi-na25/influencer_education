@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\User\ArticleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\User\CurriculumController;
@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\Auth\LoginController;    // ついでにログイ
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 
 // --- ユーザー側 ---
@@ -76,3 +77,8 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     // 管理ユーザー新規登録画面実行用
     Route::post('/register', 'Auth\RegisterController@register')->name('register');
 });
+
+Route::get('/progress', [App\Http\Controllers\User\ProgressController::class, 'index']);
+
+Route::get('/news/{id}', [\App\Http\Controllers\User\ArticleController::class, 'show'])->name('news.show');
+
