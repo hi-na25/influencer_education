@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Banner;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 
 class BannerController extends Controller
 {
@@ -24,61 +25,54 @@ class BannerController extends Controller
     // バナーの保存処理
     public function store(Request $request)
     {
-        // 1. 削除対象の処理（「ー」ボタンで消されたIDのリストが届く想定）
-        if ($request->has('deleted_ids')) {
-            foreach ($request->deleted_ids as $id) {
-                $banner = Banner::find($id);
-                if ($banner) {
-                    // 1. サーバー内の画像ファイルを削除
-                    // DBには "storage/images/banner/filename.jpg" という形式で入っている。
-                    // Storage::delete() を使うときは "public/images/banner/filename.jpg" というパスにする必要があるから変換する。
-                    $filePath = str_replace('storage/', 'public/', $banner->image);
-
-                    if (Storage::exists($filePath)) {
-                        Storage::delete($filePath);
-                    }
-
-                    // 2. データベースのレコードを削除
-                    $banner->delete();
-                }
-            }
-        }
-
-        // 2. データの取得
+        // データの取得を先に行う
         $bannersData = $request->input('banners', []);
         $bannersFiles = $request->file('banners', []);
-
-        // ★修正ポイント：テキストデータとファイルの「すべてのキー」を合体させてループ回す
         $allKeys = array_unique(array_merge(array_keys($bannersData), array_keys($bannersFiles)));
 
-        foreach ($allKeys as $key) {
-            $data = $bannersData[$key] ?? [];
-            $file = $bannersFiles[$key]['image'] ?? null;
+        // DB操作が始まる前にトランザクションを開始
+        $controller = $this;
+        return DB::transaction(function () use ($request, $allKeys, $bannersData, $bannersFiles, $controller) {
 
-            // A. 新規登録（IDがなくて、ファイルがある場合）
-            if (!isset($data['id']) && $file) {
-                $this->saveBanner($file);
-            }
-
-            // B. 既存更新（IDがあって、新しいファイルが選ばれた場合のみ）
-            elseif (isset($data['id']) && $file) {
-                $banner = Banner::find($data['id']);
-                if ($banner) {
-                    // 古いファイルを消してから更新
-                    $oldPath = str_replace('storage/', 'public/', $banner->image);
-                    \Illuminate\Support\Facades\Storage::delete($oldPath);
-
-                    $this->saveBanner($file, $banner);
+            // 1. 削除対象の処理
+            if ($request->has('deleted_ids')) {
+                foreach ($request->deleted_ids as $id) {
+                    $banner = Banner::find($id);
+                    if ($banner) {
+                        $filePath = str_replace('storage/', 'public/', $banner->image);
+                        if (Storage::exists($filePath)) {
+                            Storage::delete($filePath);
+                        }
+                        $banner->delete();
+                    }
                 }
             }
-        }
 
-        return redirect()->route('admin.show.banner.edit')->with('success', '更新完了！');
+            // 2. 更新・新規登録の処理
+            foreach ($allKeys as $key) {
+                $data = $bannersData[$key] ?? [];
+                $file = $bannersFiles[$key]['image'] ?? null;
+
+                // A. 新規登録
+                if (!isset($data['id']) && $file) {
+                    $controller->saveBanner($file);
+                }
+                // B. 既存更新
+                elseif (isset($data['id']) && $file) {
+                    $banner = Banner::find($data['id']);
+                    if ($banner) {
+                        $oldPath = str_replace('storage/', 'public/', $banner->image);
+                        Storage::delete($oldPath);
+                        $controller->saveBanner($file, $banner);
+                    }
+                }
+            }
+
+            return redirect()->route('admin.show.banner.edit');
+        });
     }
 
-
-    // 保存処理を共通化したプライベートメソッド
-    private function saveBanner(UploadedFile $file, $banner = null)
+    public function saveBanner(UploadedFile $file, $banner = null)
     {
         $fileName = $file->getClientOriginalName();
         $file->storeAs('public/images/banner', $fileName);

@@ -33,45 +33,15 @@ class CurriculumController extends Controller
 
 
         // --- 2. DBからデータを絞り込む ---
-        $curriculums = Curriculum::where('grade_id', $selectedGrade)
-            ->where(function ($query) use ($targetDate) {
-                // 1. 常時公開フラグが 1 のもの
-                $query->where('alway_delivery_flg', 1)
-                    // 2. または、配信期間が指定の年月と一致するもの
-                    ->orWhereHas('deliveryTimes', function ($q) use ($targetDate) {
-                        $q->whereYear('delivery_from', $targetDate->year)
-                            ->whereMonth('delivery_from', $targetDate->month);
-                    });
-            })
-
-            ->leftJoin('delivery_times', function ($join) {
-                $join->on('curriculums.id', '=', 'delivery_times.curriculums_id');
-            })
-            ->select('curriculums.*', DB::raw('MIN(delivery_times.delivery_from) as first_delivery'))
-            ->groupBy('curriculums.id') // distinctの代わりにgroupByでまとめる
-            ->orderByRaw('CASE WHEN alway_delivery_flg = 1 THEN 0 ELSE 1 END')
-            ->orderBy('first_delivery', 'asc')
-
-            ->get();
+        $curriculums = Curriculum::forSelectedGrade($selectedGrade, $targetDate)->get();
 
 
 
         // --- ★ Ajax 対応 ---
         // 学年名のリスト（バッジ更新用）
-        $gradeNames = [
-            1 => '小学校1年生',
-            2 => '小学校2年生',
-            3 => '小学校3年生',
-            4 => '小学校4年生',
-            5 => '小学校5年生',
-            6 => '小学校6年生',
-            7 => '中学校1年生',
-            8 => '中学校2年生',
-            9 => '中学校3年生',
-            10 => '高校1年生',
-            11 => '高校2年生',
-            12 => '高校3年生'
-        ];
+        // IDをキーに、名前を値にした配列をDBから取得
+        $gradeNames = \App\Models\Grade::pluck('name', 'id');
+
 
         // Ajax（非同期）リクエストの場合
         if ($request->ajax()) {
@@ -96,6 +66,7 @@ class CurriculumController extends Controller
             'targetDate'    => $targetDate,
             'selectedGrade' => $selectedGrade,
             'curriculums'   => $curriculums,
+            'gradeNames'    => $gradeNames,
         ]);
     }
 

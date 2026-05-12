@@ -37,18 +37,11 @@
             
             @if($selectedGrade)
                 <div class="selected-grade-badge ms-5 mt-2">
-                    {{-- gradeの数字によって表示する文字を出し分け --}}
-                    @php
-                        $gradeNames = [
-                            1 => '小学校1年生', 2 => '小学校2年生', 3 => '小学校3年生',
-                            4 => '小学校4年生', 5 => '小学校5年生', 6 => '小学校6年生',
-                            7 => '中学校1年生', 8 => '中学校2年生', 9 => '中学校3年生',
-                            10 => '高校1年生', 11 => '高校2年生', 12 => '高校3年生'
-                        ];
-                    @endphp
                     <span class="sidebar-btn {{ $selectedGrade <= 6 ? 'btn-elementary' :
                             ($selectedGrade <= 9 ? 'btn-junior-high' : 'btn-high-school') }}
                         py-1 px-3 selected-grade-label">
+                        
+                        {{-- ★コントローラーから渡された $gradeNames を使う --}}
                         {{ $gradeNames[$selectedGrade] ?? '' }}
                     </span>
                 </div>
