@@ -1,0 +1,10 @@
+body {
+    background-color: #ffffff; /* ユーザーテスト用 */
+}
+
+header {
+    background-color: #ff6435; /* ユーザーテスト用 */
+    color: white;
+    padding: 20px;
+}
+

@@ -1,0 +1,147 @@
+/* 戻る */
+.back-link {
+    color: #333;      /* 濃いグレー（ほぼ黒） */
+    font-size: 1.25rem;          /* サイズ（h5相当） */
+    font-weight: bold;           /* 太字 */
+    text-decoration: none;       /* 下線を消す */
+}
+
+.back-link:hover {
+    color: #000 !important;      /* ホバー時は完全な黒 */
+    text-decoration: underline;  /* ホバー時だけ下線を出す */
+}
+
+
+
+/* カレンダー上部の学年バッジ専用のスタイル */
+.selected-grade-label {
+    display: inline-block; /* 幅の指定を有効にする */
+    min-width: 160px;      /* 左メニューのボタンと同じくらいの幅を確保 */
+    white-space: nowrap;  /*
+    cursor: default;       /* クリック不可であることを示す */
+    text-align: center;    /* 文字を真ん中に寄せる */
+    padding-top: 8px !important;
+    padding-bottom: 6px !important;
+}
+
+
+
+/* カレンダーの月移動ボタン */
+.calendar-nav__link {
+    color: #333;            /* 落ち着いた黒（または #000） */
+    text-decoration: none;    /* 下線を消す */
+    font-size: 1.5rem;        /* 少し大きく（サイズはお好みで調整） */
+    vertical-align: middle;   /* 文字の高さ中央に合わせる */
+    transition: opacity 0.2s; /* ホバー時にふわっとさせる */
+}
+
+.calendar-nav__link:hover {
+    opacity: 0.7;             /* ホバーした時に少し薄くして「押せる感」を出す */
+    color: #000;            /* ホバー時も黒を維持 */
+}
+
+
+
+/* カレンダータイトルの微調整 */
+.calendar-nav__title {
+    position: relative;
+    top: 5px; /* 上の空白 */
+    margin-bottom: 0; /* Bootstrapの干渉を防ぐため念のため */
+    display: inline-block; /* 位置調整を確実に効かせるため */
+}
+
+
+
+
+
+
+
+
+/* サイドバーのボタン共通スタイル */
+.sidebar-btn {
+    display: block;
+    width: 60%; /* ボタン幅 */
+    margin-bottom: 2px; /* ボタンとの感覚 */
+    padding: 6px 12px;
+    border-radius: 50px; /* カプセル型 */
+    text-align: center;
+    font-size: 14px;
+    border: 2px solid;
+    background-color: transparent;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* 無効化されたボタンの挙動をCSSで制御 */
+.sidebar-btn--disabled {
+    pointer-events: none; /* クリックイベントを完全に無効化 */
+    cursor: default;      /* カーソルを指マークにしない */
+    opacity: 0.6;         /* 見た目で「押せない」感を出す（既にあるなら調整不要） */
+}
+
+/* 小学校用ボタンカラー */
+.btn-elementary {
+    background-color: #66becf;
+    border-color: #4FB8D1;
+    color: #fff; /* 文字色 */
+}
+
+/* 中学校用ボタンカラー */
+.btn-junior-high {
+    background-color: #59ac6e;
+    border-color: #58C57A;
+    color: #fff;
+}
+
+/* 高校用ボタンカラー */
+.btn-high-school {
+    background-color: #8CC34B;
+    border-color: #8CC34B;
+    color: #fff;
+}
+
+
+
+
+/* 通常のメニューアイテム */
+.side-menu__item {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+/* 非活性なメニューアイテム（追加） */
+.sidebar-btn--disabled {
+    background-color: #d1d1d1; /* グレー背景 */
+    color: #888;              /* 薄い文字色 */
+    cursor: not-allowed;      /* マウスカーソルを禁止マークに */
+    pointer-events: none;     /* クリックを完全に無効化 */
+}
+
+
+
+/* 授業カード全体の枠 */
+.curriculum-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* カリキュラムカードの画像エリアの共通設定 */
+.curriculum-card__img-wrapper {
+    width: 100%;
+    height: 180px;      /* ここで高さを固定！ */
+    border-radius: 8px;
+    object-fit: cover;  /* これで「縦長画像」も枠に合わせて綺麗に切り抜かれます */
+    display: block;     /* 幽霊な隙間を消すため追加 */
+}
+
+/* 画像がない時のダミー表示用のスタイル (BEM記法) */
+.curriculum-card__img-wrapper--empty {
+    background-color: #eee;
+    color: #aaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
