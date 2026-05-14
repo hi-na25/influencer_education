@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\Admin\ArticleRequest;
 use App\Models\Article;
 use App\Http\Controllers\User\Controller;
 
@@ -18,14 +18,8 @@ class ArticleController extends Controller
         return view('admin.article_edit', compact('article'));
     }
 
-    public function update(Request $request, $id)
+    public function update(ArticleRequest $request, $id)
     {
-        // 1. バリデーション（入力チェック）
-        $request->validate([
-            'title' => 'required|max:255',
-            'posted_date' => 'required|date',
-            'article_contents' => 'required',
-        ]);
 
         // 2. 更新するデータを取得
         $article = Article::findOrFail($id);
