@@ -3,7 +3,7 @@
 </head>
 
 <div class="password-edit-container">
-    <a href="#" class="back-link">←戻る</a>
+    <a href="{{ route('profile.edit') }}" class="back-link">←戻る</a>
     <h1>パスワード変更</h1>
 
     @if (session('status'))
@@ -20,6 +20,7 @@
 
     <form action="{{ route('password.update') }}" method="POST">
         @csrf
+
         <div class="form-group">
             <label>旧パスワード</label>
             <input type="password" name="current_password">

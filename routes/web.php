@@ -2,6 +2,7 @@
 use App\Http\Controllers\User\ArticleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
+use App\Http\Controllers\User\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,12 @@ Route::get('/', function () {
 Route::get('/progress', [App\Http\Controllers\User\ProgressController::class, 'index']);
 
 Route::get('/news/{id}', [\App\Http\Controllers\User\ArticleController::class, 'show'])->name('news.show');
+
+// プロフィール編集画面を表示する（GET）
+Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+
+// プロフィール内容を保存・更新する（POST）
+Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
 // パスワード変更画面の表示 (GET)
 Route::get('/password/edit', [App\Http\Controllers\User\ProfileController::class, 'editPassword'])->name('password.edit');
