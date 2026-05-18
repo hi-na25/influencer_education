@@ -44,6 +44,31 @@ class ArticleController extends Controller
         return view('admin.article_list', compact('articles'));
     }
 
+    // 新規登録画面を表示するメソッド
+    public function create()
+    {
+        // resources/views/admin/article_create.blade.php を表示する場合
+        return view('admin.article_create');
+    }
+
+    // お知ら情報をデータベースに保存するメソッド
+    public function store(ArticleRequest $request)
+    {
+        // 1. 新しいお知らせ（Article）のインスタンスを作成
+        $article = new Article();
+
+        // 2. フォームから送られてきたデータをそれぞれ代入
+        $article->title = $request->title;
+        $article->posted_date = $request->posted_date;
+        $article->article_contents = $request->article_contents;
+
+        // 3. データベースに保存
+        $article->save();
+
+        // 4. 保存が終わったら、お知らせ一覧画面にメッセージ付きで戻る
+        return redirect()->route('admin.articles.index')->with('success', 'お知らせを新規登録しました！');
+    }
+
     public function destroy($id)
     {
         // 指定されたIDのお知らせを探して削除

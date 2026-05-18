@@ -39,16 +39,18 @@ Route::post('/password/update', [App\Http\Controllers\User\ProfileController::cl
 // 管理者用グループ（URLが /admin/... になります）
 Route::prefix('admin')->name('admin.')->group(function () {
     
-    // お知らせ編集画面の表示 (GET)
-    Route::get('/articles/{id}/edit', [AdminArticleController::class, 'edit'])->name('articles.edit');
+// お知らせ編集画面の表示 (GET)
+Route::get('/articles/{id}/edit', [AdminArticleController::class, 'edit'])->name('articles.edit');
     
-    // お知らせ更新処理 (PUT)
-    Route::put('/articles/{id}/update', [AdminArticleController::class, 'update'])->name('articles.update');
+ // お知らせ更新処理 (PUT)
+Route::put('/articles/{id}/update', [AdminArticleController::class, 'update'])->name('articles.update');
 
-    Route::get('/articles', [App\Http\Controllers\Admin\ArticleController::class, 'index'])->name('articles.index');
+Route::get('/articles', [App\Http\Controllers\Admin\ArticleController::class, 'index'])->name('articles.index');
 
-    Route::get('/articles/create', [App\Http\Controllers\Admin\ArticleController::class, 'create'])->name('articles.create');
+Route::get('/articles/create', [App\Http\Controllers\Admin\ArticleController::class, 'create'])->name('articles.create');
 
-    // お知らせ削除処理
-    Route::delete('/articles/{id}', [App\Http\Controllers\Admin\ArticleController::class, 'destroy'])->name('articles.destroy');
+Route::post('/articles', [App\Http\Controllers\Admin\ArticleController::class, 'store'])->name('articles.store');
+
+// お知らせ削除処理
+Route::delete('/articles/{id}', [App\Http\Controllers\Admin\ArticleController::class, 'destroy'])->name('articles.destroy');
 });
