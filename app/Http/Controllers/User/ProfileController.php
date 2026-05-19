@@ -47,38 +47,34 @@ class ProfileController extends Controller
   {
       $user = \App\Models\User::find(1);
 
-      // バリデーション（必要に応じて調整してください）
-      $request->validate([
-          'name' => 'required|string|max:255',
-          'name_kana' => 'required|string|max:255',
-          'email' => 'required|email|unique:users,email,' . $user->id,
-          'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // 画像の制限
-      ]);
+      \Illuminate\Support\Facades\DB::transaction(function () use ($request, $user) {
+            
+            // 名前などの基本情報を更新
+            $user->name = $request->name;
+            $user->name_kana = $request->name_kana;
+            $user->email = $request->email;
 
-      // 名前などの基本情報を更新
-      $user->name = $request->name;
-      $user->name_kana = $request->name_kana;
-      $user->email = $request->email;
+            // 画像がアップロードされた場合の処理
+            if ($request->hasFile('profile_image')) {
+                // 古い画像があれば削除する（任意）
+                if ($user->profile_image) {
+                    \Illuminate\Support\Facades\Storage::disk('public')->delete($user->profile_image);
+                }
 
-      // 画像がアップロードされた場合の処理
-      if ($request->hasFile('profile_image')) {
-          // 古い画像があれば削除する（任意）
-          if ($user->profile_image) {
-              Storage::disk('public')->delete($user->profile_image);
-          }
-        
-          // 画像を保存し、そのパスをDBに記録
-          if ($request->hasFile('profile_image')) {
-              // 1. 画像を images/profile フォルダに profile.png という名前で保存
-              $path = $request->file('profile_image')->storeAs('images/profile', 'profile.png', 'public');
-    
-               // 2. DBには「images/profile/profile.png」という文字列を保存する
-               $user->profile_image = $path;
-           }
-      }
+                // 画像を保存し、そのパスをDBに記録
+                // 1. 画像を images/profile フォルダに profile.png という名前で保存
+                $path = $request->file('profile_image')->storeAs('images/profile', 'profile.png', 'public');
 
-      $user->save(); // データベースに保存
+                // 2. DBには「images/profile/profile.png」という文字列を保存する
+                $user->profile_image = $path;
+            }
 
-      return redirect()->route('profile.edit')->with('success', 'プロフィールを更新しました！');
-  }
+            // 最後にしっかりデータベースに保存する（※ここ重要です！）
+            $user->save();
+            
+        }); // 👈 トランザクションはここまで
+
+        // 💡 3. 保存が終わったら元の画面などにリダイレクトさせます（既存のコードに合わせてください）
+        return redirect()->back()->with('success', 'プロフィールを更新しました！');
+    }
 }
