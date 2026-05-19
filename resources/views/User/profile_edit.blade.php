@@ -27,14 +27,26 @@
             <div class="input-row">
                 <label>ユーザーネーム</label>
                 <input type="text" name="name" value="{{ $user->name ?? '' }}">
+                {{-- 💡 エラーメッセージ表示を追加 --}}
+                @error('name')
+                    <span style="color: red; font-size: 14px; display: block; margin-top: 5px;">{{ $message }}</span>
+                @enderror
             </div>
             <div class="input-row">
                 <label>カナ</label>
                 <input type="text" name="name_kana" value="{{ $user->name_kana ?? '' }}">
+                {{-- 💡 エラーメッセージ表示を追加 --}}
+                @error('name_kana')
+                    <span style="color: red; font-size: 14px; display: block; margin-top: 5px;">{{ $message }}</span>
+                @enderror
             </div>
             <div class="input-row">
                 <label>メールアドレス</label>
                 <input type="email" name="email" value="{{ $user->email ?? '' }}">
+                {{-- 💡 エラーメッセージ表示を追加 --}}
+                @error('email')
+                    <span style="color: red; font-size: 14px; display: block; margin-top: 5px;">{{ $message }}</span>
+                @enderror
             </div>
             <div class="input-row">
                 <label>パスワード</label>

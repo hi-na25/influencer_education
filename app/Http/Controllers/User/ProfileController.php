@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\User\Controller;
 use App\Http\Requests\User\ProfileRequest;
+use App\Http\Requests\User\PasswordRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,7 @@ class ProfileController extends Controller
         return view('user.password_edit');
    }
 
-   public function updatePassword(ProfileRequest $request)
+   public function updatePassword(PasswordRequest $request)
   {
 
       $user = \App\Models\User::find(1);// 今ログインしているユーザーを取得(一旦強制的に連れてくる)
@@ -43,7 +44,7 @@ class ProfileController extends Controller
   }
 
   // 2. プロフィール情報を更新する
-  public function update(Request $request)
+  public function update(ProfileRequest $request)
   {
       $user = \App\Models\User::find(1);
 
