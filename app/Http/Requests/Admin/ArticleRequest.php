@@ -29,4 +29,13 @@ class ArticleRequest extends FormRequest
             'article_contents' => 'required',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'posted_date.required'      => '日付を入力してください',
+            'title.required'            => 'タイトルを入力してください',
+            'article_contents.required' => '本文を入力してください',
+        ];
+    }
 }
