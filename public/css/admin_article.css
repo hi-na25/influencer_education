@@ -1,0 +1,59 @@
+/* 画像のデザインに寄せたスタイル */
+        body { 
+            font-family: sans-serif; 
+            margin: 0; 
+        }
+        .header { 
+            background-color: #40E0D0; 
+            padding: 15px; display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            color: white; 
+        }
+        .nav-buttons button { 
+            background-color: #666; 
+            color: white; border: none; 
+            padding: 8px 15px; 
+            border-radius: 5px; 
+            margin-right: 5px; 
+            cursor: pointer; 
+        }
+        .container { 
+            padding: 20px; 
+            width: 65%; /*小画面の調整 */
+            max-width: 900px; 
+            margin-left: 50px; /* 左側に固定の余白を作ることで、全体を左に寄せる */
+            margin-right: auto; /* 右側は自動で余白にする（これで右が広くなる） */
+        }
+        .form-group { 
+            margin-bottom: 20px; 
+            display: flex; 
+            align-items: center; 
+        }
+        .form-group label { 
+            width: 100px; 
+            font-weight: bold; 
+        }
+        .form-group input, .form-group textarea {
+             flex: 1; 
+             padding: 8px; 
+             border: 1px solid #ccc; 
+            }
+        .form-group textarea { 
+            height: 150px; 
+        }
+        .submit-btn { 
+            background-color: #666; 
+            color: white; 
+            border: none; 
+            padding: 10px 60px; 
+            display: block; 
+            margin: 30px auto; 
+            cursor: pointer; 
+        }
+        .back-link { 
+            text-decoration: none; 
+            color: black; 
+            display: block; 
+            margin-bottom: 10px; 
+        }

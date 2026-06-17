@@ -1,0 +1,70 @@
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    font-family: sans-serif;
+    padding: 0 20px;
+}
+
+/* 戻るボタン */
+.back-btn {
+    display: inline-block;
+    background-color: #6c757d;
+    color: white;
+    padding: 6px 18px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+h2 {
+    font-size: 26px;
+    margin-bottom: 35px;
+    font-weight: bold;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+/* 入力欄（角丸、薄いグレーの枠線、フォーカス時の調整） */
+.form-group input[type="text"],
+.form-group input[type="datetime-local"],
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 15px;
+    background-color: #fff;
+}
+
+/* 登録ボタン（濃いグレーで中央配置） */
+.button-container {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.submit-btn {
+    background-color: #495057;
+    color: white;
+    padding: 12px 100px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.submit-btn:hover {
+    background-color: #343a40;
+}

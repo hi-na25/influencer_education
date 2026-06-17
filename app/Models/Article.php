@@ -15,5 +15,9 @@ class Article extends Model
         'posted_date' => 'datetime',
     ];
 
-    // もし主キー（id）以外の名前を使っている場合は必要ですが、今回は id なので不要です
+    protected $fillable = [
+        'title',
+        'posted_date',
+        'article_contents',
+    ];
 }
